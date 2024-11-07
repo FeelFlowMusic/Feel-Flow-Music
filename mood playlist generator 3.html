@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood-Based Playlist Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #fff;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        select, button {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .playlist {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .playlist li {
+            background-color: #e0e0e0;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        #happy {
+            background-color: #FFEB3B;
+        }
+
+        #sad {
+            background-color: #607D8B;
+        }
+
+        #relaxed {
+            background-color: #03A9F4;
+        }
+
+        #energetic {
+            background-color: #FF5722;
+        }
+
+        .emoji {
+            font-size: 24px;
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Mood-Based Playlist Generator 🎶</h1>
+    <div class="container">
+        <label for="mood-select">Choose your mood:</label>
+        <select id="mood-select">
+            <option value="happy">Happy 😄</option>
+            <option value="sad">Sad 😢</option>
+            <option value="relaxed">Relaxed 😌</option>
+            <option value="energetic">Energetic ⚡</option>
+        </select>
+        <br>
+        <button onclick="generatePlaylist()">Generate Playlist</button>
+
+        <div id="playlist-container">
+            <h2>Suggested Playlist:</h2>
+            <ul id="playlist" class="playlist"></ul>
+        </div>
+    </div>
+
+    <script>
+        const playlists = {
+            happy: [
+                'Happy by Pharrell Williams',
+                'Can\'t Stop the Feeling! by Justin Timberlake',
+                'Uptown Funk by Mark Ronson ft. Bruno Mars',
+                'Good as Hell by Lizzo',
+                'Walking on Sunshine by Katrina and the Waves',
+                'Shake It Off by Taylor Swift'
+            ],
+            sad: [
+                'Someone Like You by Adele',
+                'The Night We Met by Lord Huron',
+                'Tears in Heaven by Eric Clapton',
+                'Fix You by Coldplay',
+                'Hurt by Johnny Cash',
+                'Stay by Rihanna ft. Mikky Ekko'
+            ],
+            relaxed: [
+                'Weightless by Marconi Union',
+                'Sunset Lover by Petit Biscuit',
+                'Clair de Lune by Debussy',
+                'Island in the Sun by Weezer',
+                'The Lazy Song by Bruno Mars',
+                'Banana Pancakes by Jack Johnson'
+            ],
+            energetic: [
+                'Eye of the Tiger by Survivor',
+                'Stronger by Kanye West',
+                'Lose Yourself by Eminem',
+                'Titanium by David Guetta ft. Sia',
+                'Can’t Hold Us by Macklemore & Ryan Lewis',
+                'Pump It by The Black Eyed Peas'
+            ]
+        };
+
+        function generatePlaylist() {
+            const mood = document.getElementById('mood-select').value;
+            const playlistContainer = document.getElementById('playlist');
+            playlistContainer.innerHTML = '';
+
+            const selectedPlaylist = playlists[mood];
+            selectedPlaylist.forEach(song => {
+                const li = document.createElement('li');
+                li.textContent = song;
+                li.classList.add(mood);  // Add mood-specific class for color
+                playlistContainer.appendChild(li);
+            });
+
+            // Add emoji and background color to the body based on mood
+            document.body.style.backgroundColor = getMoodColor(mood);
+            const moodEmoji = getMoodEmoji(mood);
+            document.querySelector('h1').innerHTML = `Mood-Based Playlist Generator ${moodEmoji}`;
+        }
+
+        function getMoodColor(mood) {
+            switch (mood) {
+                case 'happy':
+                    return '#FFEB3B';
+                case 'sad':
+                    return '#607D8B';
+                case 'relaxed':
+                    return '#03A9F4';
+                case 'energetic':
+                    return '#FF5722';
+                default:
+                    return '#f4f4f4';
+            }
+        }
+
+        function getMoodEmoji(mood) {
+            switch (mood) {
+                case 'happy':
+                    return '😄';
+                case 'sad':
+                    return '😢';
+                case 'relaxed':
+                    return '😌';
+                case 'energetic':
+                    return '⚡';
+                default:
+                    return '🎶';
+            }
+        }
+    </script>
+
+</body>
+</html>
